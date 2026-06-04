@@ -396,10 +396,160 @@
 </section>
 <!-- End image carousel -->
 
+<!-- Interactive Pinwheel -->
+<section class="hero is-small" id="repair-pinwheel">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h2 class="title is-3">Spin to Repair</h2>
+      <p class="subtitle is-5" style="margin-bottom: 2rem;">
+        Give the wheel a spin &mdash; whatever part it lands on, we repair live, right here.
+      </p>
+
+      <div class="pinwheel-stage">
+        <div class="pinwheel-pointer"></div>
+        <canvas id="pinwheelCanvas" width="420" height="420"
+                role="img" aria-label="Spinnable repair wheel"></canvas>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <button id="spinBtn" class="button is-medium is-dark is-rounded">
+          <span class="icon"><i class="fas fa-sync-alt"></i></span>
+          <span>Spin the Wheel</span>
+        </button>
+      </div>
+
+      <div id="spinResult" class="pinwheel-result" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #repair-pinwheel .pinwheel-stage {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+  }
+  #repair-pinwheel #pinwheelCanvas {
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    will-change: transform;
+  }
+  #repair-pinwheel .pinwheel-pointer {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 30px solid #2b2b2b;
+    z-index: 5;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
+  }
+  #repair-pinwheel .pinwheel-result {
+    margin-top: 1.5rem;
+    min-height: 2.5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  #repair-pinwheel .pinwheel-result.show { opacity: 1; }
+  #repair-pinwheel #spinBtn[disabled] { opacity: 0.5; cursor: not-allowed; }
+</style>
+
+<script>
+(function () {
+  // EDIT THIS LIST — these are the wheel segments.
+  var parts = ["Part 1", "Part 2", "Part 3", "Part 4", "Part 5", "Part 6"];
+
+  // Segment colors (cycled). Edit freely.
+  var colors = ["#2b3a67", "#496a81", "#66999b", "#b3af8f", "#c8b88a", "#a36f4f"];
+
+  var canvas = document.getElementById("pinwheelCanvas");
+  var ctx = canvas.getContext("2d");
+  var btn = document.getElementById("spinBtn");
+  var resultEl = document.getElementById("spinResult");
+  var size = canvas.width;
+  var center = size / 2;
+  var radius = center - 6;
+  var seg = (2 * Math.PI) / parts.length;
+  var currentRotation = 0;
+  var spinning = false;
+
+  function drawWheel() {
+    ctx.clearRect(0, 0, size, size);
+    for (var i = 0; i < parts.length; i++) {
+      var start = i * seg;
+      var end = start + seg;
+      ctx.beginPath();
+      ctx.moveTo(center, center);
+      ctx.arc(center, center, radius, start, end);
+      ctx.closePath();
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.6)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label
+      ctx.save();
+      ctx.translate(center, center);
+      ctx.rotate(start + seg / 2);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "600 18px Inter, sans-serif";
+      ctx.fillText(parts[i], radius - 18, 6);
+      ctx.restore();
+    }
+    // Hub
+    ctx.beginPath();
+    ctx.arc(center, center, 28, 0, 2 * Math.PI);
+    ctx.fillStyle = "#1a1a1a";
+    ctx.fill();
+  }
+
+  function spin() {
+    if (spinning) return;
+    spinning = true;
+    btn.setAttribute("disabled", "disabled");
+    resultEl.classList.remove("show");
+
+    var winner = Math.floor(Math.random() * parts.length);
+    var extraTurns = 5 + Math.floor(Math.random() * 3); // 5–7 full spins
+
+    // Pointer is at top (12 o'clock). Compute rotation so the winning
+    // segment's center lands under the pointer.
+    var segCenter = winner * seg + seg / 2;
+    var targetAngle = (3 * Math.PI / 2) - segCenter; // 12 o'clock in canvas coords
+    var totalRotation = extraTurns * 2 * Math.PI + targetAngle;
+
+    // Always rotate forward from current position.
+    var base = currentRotation - (currentRotation % (2 * Math.PI));
+    currentRotation = base + totalRotation;
+
+    canvas.style.transform = "rotate(" + currentRotation + "rad)";
+
+    setTimeout(function () {
+      resultEl.textContent = "Repairing: " + parts[winner];
+      resultEl.classList.add("show");
+      btn.removeAttribute("disabled");
+      spinning = false;
+    }, 4100); // slightly longer than the 4s CSS transition
+  }
+
+  drawWheel();
+  btn.addEventListener("click", spin);
+  canvas.addEventListener("click", spin);
+})();
+</script>
+<!-- End Interactive Pinwheel -->
 
 
-
-<!-- Simulation video -->
+<!-- Youtube video -->
 <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
