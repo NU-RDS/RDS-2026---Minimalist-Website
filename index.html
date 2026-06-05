@@ -355,6 +355,136 @@
 </section>
 <!-- End paper abstract -->
 
+<!-- Specs vs Goals -->
+<section class="section hero" id="specs">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Specs Achieved vs. Team Goals</h2>
+    <p class="subtitle is-6 has-text-centered" style="margin-bottom:1.5rem;">
+      Goals are shown upfront &mdash; click any row to reveal what we achieved.
+    </p>
+
+    <div class="buttons is-centered" style="margin-bottom:1.5rem;">
+      <button class="button is-small is-dark is-rounded" onclick="revealAllSpecs()">Reveal All</button>
+      <button class="button is-small is-rounded" onclick="hideAllSpecs()">Hide All</button>
+    </div>
+
+    <div class="table-container">
+      <table class="table is-fullwidth is-hoverable" id="specsTable">
+        <thead><tr>
+          <th>Specification</th><th>Team Goal</th><th>Achieved</th>
+        </tr></thead>
+        <tbody>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Scale</td>
+          <td class="spec-goal">~1.5&times; human finger (gorilla scale)</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Active DOF</td>
+          <td class="spec-goal">3 active joints max; one splay (MCP abd/add)</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Range of Motion</td>
+          <td class="spec-goal">~90&deg; in-plane (80&deg; min); &plusmn;10&deg; splay</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Speed</td>
+          <td class="spec-goal">&ge; 1 full ROM in 1 s</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Continuous Force</td>
+          <td class="spec-goal">&ge; 20 N at fingerpad extension</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Max Power (all DOF)</td>
+          <td class="spec-goal">&le; 100 W total during use</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Emergency Stop</td>
+          <td class="spec-goal">Power-cutting E-stop required</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Budget</td>
+          <td class="spec-goal">~$5,000 per team</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Full Finger Assembly Time</td>
+          <td class="spec-goal">TEAM_GOAL</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        <tr class="spec-row" onclick="toggleSpec(this)">
+          <td class="spec-name">Tendon Routing Time</td>
+          <td class="spec-goal">TEAM_GOAL</td>
+          <td class="spec-achieved">
+            <span class="spec-hidden">Click to reveal</span>
+            <span class="spec-value">ACHIEVED_VALUE</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  #specs .spec-row { cursor: pointer; transition: background 0.15s ease; }
+  #specs .spec-row:hover { background: #f0f0f0; }
+  #specs .spec-name { font-weight: 700; }
+  #specs td { vertical-align: middle; }
+  #specs .spec-value { display: none; font-weight: 700; color: #1b6b3a; }
+  #specs .spec-hidden {
+    display: inline-block; color: #999; font-style: italic; font-size: 0.85rem;
+    border: 1px dashed #ccc; border-radius: 999px; padding: 2px 12px;
+  }
+  #specs .spec-row.revealed .spec-hidden { display: none; }
+  #specs .spec-row.revealed .spec-value { display: inline; }
+</style>
+
+<script>
+  function toggleSpec(row) { row.classList.toggle("revealed"); }
+  function revealAllSpecs() {
+    document.querySelectorAll("#specs .spec-row").forEach(function (r) { r.classList.add("revealed"); });
+  }
+  function hideAllSpecs() {
+    document.querySelectorAll("#specs .spec-row").forEach(function (r) { r.classList.remove("revealed"); });
+  }
+</script>
+<!-- End Specs vs Goals -->
+
 <!-- Bill of Materials -->
 <section class="section hero is-light" id="bom">
   <div class="container is-max-desktop">
