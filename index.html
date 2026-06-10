@@ -1117,7 +1117,7 @@
       <div class="test-panel" id="panel-stepforce" data-cat="effort" style="display:none;">
         <h3 class="title is-4">Step Force Control</h3>
         <div class="content has-text-justified">
-          <p>We were not able to get a steady force control with our finger, and the results below is our best effort. We believe that essentially the issue is that mechanically, tendon terminations and the snap fits would fail nearly every time we tried to tune the gains to make it more than nearly a constant value of force due to their ease of fatigue, thus making it impossible to tune gains such that a step force was possible. </p>
+          <p>In this test, we determine the maximum force possible for the fully extended fingertip to provide. We did this by ramping up from 0N to 20 N force at the fingertip  over a period of 45 seconds. The measured max force the fingertip provided is <strong>19.7 N</strong> before failure. </p>
 
           <h2 class="subtitle has-text-centered">Step Force Response</h2>
           <img src="static/images/stepforce.png" alt="Step force control response" loading="lazy" style="max-width:100%; height:auto; margin:1rem auto; display:block;"/>
@@ -1263,7 +1263,7 @@
       </div>
     </div>
 
-    <div class="mech-panel" id="mechpanel-mech2" style="display:block;">
+    <div class="mech-panel" id="mechpanel-mech2" style="display:none;">
       <h3 class="title is-4">Repetitive Flexion-Extension Cycles Testing</h3>
       <div class="content has-text-justified" style="max-width:900px; margin:0 auto;">
         <p>Making sure that the finger can run continuously is critical for validating our system’s robustness and minimizing the required number of necessary repairs. For this test, we will run the finger through repetitive flexion-extension cycles at 80% range of motion for 60 minutes and monitor temperature rise, current draw increase or any mechanical failures in the system. Our finger was able to complete this test with no visible degradation and temperature rise.</p>
